@@ -1,0 +1,17 @@
+{% extends 'editordb/base_editordb.html' %}
+
+{% block title %}
+
+    Update device
+
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" action="{% url "update_device_url" id=device.id %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Update" class="btn btn-dark">
+</form>
+
+{% endblock %}

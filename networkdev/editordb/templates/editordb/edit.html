@@ -1,0 +1,11 @@
+{% extends 'editordb/base_editordb.html' %}
+
+<!DOCTYPE html>
+
+{% block content %}
+<form method="POST" action="{% url 'devices_create_url' %}">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

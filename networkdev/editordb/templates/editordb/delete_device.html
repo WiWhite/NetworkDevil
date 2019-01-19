@@ -1,0 +1,19 @@
+{% extends 'editordb/base_editordb.html' %}
+
+{% block title %}
+
+    Delete device
+
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" action="{% url "delete_device_url" id=device.id %}">
+    {% csrf_token %}
+
+    <h3>Are you sure you want delete device with this ip address <b>{{device.ip_address}}</b>?</h3>
+
+    <input type="submit" value="Delete" class="btn btn-dark">
+</form>
+
+{% endblock %}

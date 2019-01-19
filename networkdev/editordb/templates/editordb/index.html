@@ -1,0 +1,39 @@
+{% extends 'editordb/base_editordb.html' %}
+
+
+{% block title %}
+    All Devices
+{% endblock %}
+
+
+{% block content %}
+
+    <form action="{% url "add_device_url" %}">
+        <button type="submit" class="btn btn-dark">Add new device</button>
+    </form>
+
+
+    {% if devices.count > 0 %}
+
+        <h2>DEVICES LIST</h2>
+        <table class="table table-sm">
+            <thead><th scope="col">IP address</th><th scope="col">Login</th><th scope="col">Password</th><th scope="col">Production</th><th scope="col">Connection type</th><th></th></thead>
+
+        {% for device in devices %}
+
+            <tr>
+                <td scope="row">{{ device.ip_address }}</td>
+                <td scope="row">{{ device.login }}</td>
+                <td scope="row">{{ device.password }}</td>
+                <td scope="row">{{ device.production }}</td>
+                <td scope="row">{{ device.connection_type }}</td>
+                <td><a href="{{device.id}}/update_device" class="btn btn-dark">Edit</a> | <a href="{{device.id}}/delete_device" class="btn btn-dark">Delete</a></td>
+            </tr>
+
+        {% endfor %}
+        </table>
+
+    {% endif %}
+
+
+{% endblock %}
