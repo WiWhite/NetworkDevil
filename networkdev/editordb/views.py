@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.urls import reverse
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
 
 from .forms import DevicesForm
 from .models import Devices
@@ -11,7 +14,31 @@ class DevicesView(View):
 
     def get(self, request):
         devices = Devices.objects.all()
-        return render(request, 'editordb/index.html', {'devices': devices})
+        paginator = Paginator(devices, 10)
+
+        page_number = request.GET.get('page', 1)
+        page = paginator.get_page(page_number)
+
+        is_paginated = page.has_other_pages()
+
+        if page.has_previous():
+            prev_url = '?page={}'.format(page.previous_page_number())
+        else:
+            prev_url = ''
+
+        if page.has_next():
+            next_url = '?page={}'.format(page.next_page_number())
+        else:
+            next_url = ''
+
+        context = {
+            'devices': page,
+            'is_paginated': is_paginated,
+            'prev_url': prev_url,
+            'next_url': next_url,
+        }
+
+        return render(request, 'editordb/index.html', context=context)
 
 
 class AddDevice(View):
@@ -42,7 +69,11 @@ class UpdateDevice(View):
     def get(self, request, id):
         device = Devices.objects.get(pk=id)
         form = DevicesForm(instance=device)
-        return render(request, 'editordb/update_device.html', {'form': form, 'device': device})
+        context = {
+            'form': form,
+            'device': device
+            }
+        return render(request, 'editordb/update_device.html', context=context)
 
     def post(self, request, id):
         device = Devices.objects.get(pk=id)

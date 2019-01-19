@@ -9,17 +9,17 @@
 {% block content %}
 
     <form action="{% url "add_device_url" %}">
-        <button type="submit" class="btn btn-dark">Add new device</button>
+        <button type="submit" class=" btn btn-dark ">Add new device</button>
     </form>
 
 
-    {% if devices.count > 0 %}
+    {% if devices.object_list.count > 0 %}
 
         <h2>DEVICES LIST</h2>
         <table class="table table-sm">
             <thead><th scope="col">IP address</th><th scope="col">Login</th><th scope="col">Password</th><th scope="col">Production</th><th scope="col">Connection type</th><th></th></thead>
 
-        {% for device in devices %}
+        {% for device in devices.object_list %}
 
             <tr>
                 <td scope="row">{{ device.ip_address }}</td>
@@ -34,6 +34,41 @@
         </table>
 
     {% endif %}
+
+    {% if is_paginated%}
+
+    <nav aria-label="...">
+      <ul class="pagination">
+        <li class="page-item {% if not prev_url %} disabled {% endif %}">
+          <a class="page-link" href="{{ prev_url }}" tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+
+
+        {% for n in devices.paginator.page_range %}
+
+            {% if devices.number == n %}
+
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="?page={{ n }}">{{ n }}<span class="sr-only">(current)</span></a>
+                </li>
+
+            {% elif n > devices.number|add:-3 and n < devices.number|add:3  %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                </li>
+            {% endif %}
+
+
+        {% endfor %}
+
+        <li class="page-item {% if not next_url %} disabled {% endif %}">
+          <a class="page-link" href="{{ next_url }}">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+    {% endif %}
+
 
 
 {% endblock %}
