@@ -2,6 +2,12 @@
 
 <!DOCTYPE html>
 
+
+{% block title %}
+    Edit device
+{% endblock %}
+
+
 {% block content %}
 <form method="POST" action="{% url 'devices_create_url' %}">
     {% csrf_token %}

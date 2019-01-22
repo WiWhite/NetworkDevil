@@ -3,8 +3,6 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.urls import reverse
 from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-from django.core.paginator import PageNotAnInteger
 
 from .forms import DevicesForm
 from .models import Devices
