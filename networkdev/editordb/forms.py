@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Devices
+from .models import Devices, Crontab
 
 
 class DevicesForm(forms.ModelForm):
@@ -11,3 +11,9 @@ class DevicesForm(forms.ModelForm):
                   'password',
                   'production',
                   'connection_type',)
+
+
+class CrontabForm(forms.ModelForm):
+    class Meta:
+        model = Crontab
+        fields = ('minute', 'hour', 'day')

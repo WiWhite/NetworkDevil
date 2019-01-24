@@ -4,8 +4,8 @@ from django.views import View
 from django.urls import reverse
 from django.core.paginator import Paginator
 
-from .forms import DevicesForm
-from .models import Devices
+from .forms import DevicesForm, CrontabForm
+from .models import Devices, Crontab
 
 
 class DevicesView(View):
@@ -95,3 +95,48 @@ class DeleteDevice(View):
         device = Devices.objects.get(pk=id)
         device.delete()
         return HttpResponseRedirect(reverse('devices_list_url'))
+
+class AddCrontab(View):
+
+    def get(self, request):
+        form = CrontabForm()
+        return render(request, 'editordb/add_crontab.html', {'form': form})
+
+    def post(self, request):
+        form = CrontabForm(request.POST)
+
+        if form.is_valid():
+            new_crontab = Crontab(
+                minute=form.cleaned_data['minute'],
+                hour=form.cleaned_data['hour'],
+                day=form.cleaned_data['day'],
+            )
+            new_crontab.save()
+            return HttpResponseRedirect(reverse('devices_list_url'))
+        else:
+            return render(request, 'editordb/add_crontab.html', {'form': form})
+
+
+class UpdateCrontab(View):
+
+    def get(self, request):
+        try:
+            crontab = Crontab.objects.get()
+        except Crontab.DoesNotExist:
+            crontab = None
+
+        form = CrontabForm(instance=crontab)
+        context = {'form': form, 'crontab': crontab}
+        templates = ['editordb/update_crontab.html', 'editordb/index.html']
+
+        return render(request, templates, context=context)
+
+    def post(self, request):
+        crontab = Crontab.objects.get()
+        form = CrontabForm(request.POST, instance=crontab)
+
+        if form.is_valid():
+            update_crontab = form.save()
+            return HttpResponseRedirect(reverse('devices_list_url'))
+        else:
+            return render(request, 'editordb/update_crontab.html', {'form': form})

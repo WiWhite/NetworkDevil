@@ -60,9 +60,8 @@ def backup_name(ip_address):
 def save(ip_address, filename, output):
 
     basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    dirname = ip_address
     dir_with_backups = 'BACKUPS'
-    devicedir = os.path.join(basedir, dir_with_backups, dirname)
+    devicedir = os.path.join(basedir, dir_with_backups, ip_address)
 
     if not os.path.exists(os.path.join(basedir, dir_with_backups)):
         os.makedirs(os.path.join(basedir, dir_with_backups))
