@@ -48,6 +48,9 @@ class Days(models.Model):
     def __str__(self):
         return self.days
 
+    class Meta:
+        ordering = ['id']
+
 class Crontab(models.Model):
     minute = models.ForeignKey(Minutes, on_delete=models.CASCADE)
     hour = models.ForeignKey(Hours, on_delete=models.CASCADE)

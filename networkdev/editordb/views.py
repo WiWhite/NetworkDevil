@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 
 from .forms import DevicesForm, CrontabForm
 from .models import Devices, Crontab
+from my_crontab import add_cron
 
 
 class DevicesView(View):
@@ -112,6 +113,7 @@ class AddCrontab(View):
                 day=form.cleaned_data['day'],
             )
             new_crontab.save()
+            add_cron(new_crontab.minute, new_crontab.hour, new_crontab.day)
             return HttpResponseRedirect(reverse('devices_list_url'))
         else:
             return render(request, 'editordb/add_crontab.html', {'form': form})
@@ -123,13 +125,13 @@ class UpdateCrontab(View):
         try:
             crontab = Crontab.objects.get()
         except Crontab.DoesNotExist:
-            crontab = None
+            crontab = 'fuck'
 
         form = CrontabForm(instance=crontab)
         context = {'form': form, 'crontab': crontab}
         templates = ['editordb/update_crontab.html', 'editordb/index.html']
-
         return render(request, templates, context=context)
+
 
     def post(self, request):
         crontab = Crontab.objects.get()

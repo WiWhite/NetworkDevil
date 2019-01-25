@@ -11,20 +11,15 @@
     <form action="{% url "add_device_url" %}">
         <button type="submit" class=" btn btn-dark ">Add new device</button>
     </form>
-    
-    {% if crontab == None %}
 
-      <form action="{% url "add_crontab_url" %}">
-          <button type="submit" class=" btn btn-dark ">Add crontab</button>
-      </form>
+    <form action="{% url "add_crontab_url" %}">
+        <button type="submit" class=" btn btn-dark ">Add crontab</button>
+    </form>
 
-    {% else %}
 
-        <form action="{% url "update_crontab_url" %}">
-          <button type="submit" class=" btn btn-dark ">Update crontab</button>
-        </form>
-
-    {% endif %}
+    <form action="{% url "update_crontab_url" %}">
+      <button type="submit" class=" btn btn-dark ">Update crontab</button>
+    </form>
 
 
     {% if devices.object_list.count > 0 %}
