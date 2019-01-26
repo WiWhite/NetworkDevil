@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import validate_ipv4_address
 
 
 class ID_production(models.Model):
@@ -16,12 +17,20 @@ class ID_connection_type(models.Model):
 
 
 class Devices(models.Model):
-    ip_address = models.CharField(max_length=15, db_index=True, unique=True)
+    ip_address = models.CharField(
+                            max_length=15,
+                            db_index=True,
+                            unique=True,
+                            validators=[validate_ipv4_address]
+                            )
     login = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
     location_backups = models.CharField(max_length=100, blank=True)
     production = models.ForeignKey(ID_production, on_delete=models.CASCADE)
-    connection_type = models.ForeignKey(ID_connection_type, on_delete=models.CASCADE)
+    connection_type = models.ForeignKey(
+                                 ID_connection_type,
+                                 on_delete=models.CASCADE
+                                 )
 
     def __str__(self):
         return self.ip_address

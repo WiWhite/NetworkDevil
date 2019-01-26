@@ -125,7 +125,7 @@ class UpdateCrontab(View):
         try:
             crontab = Crontab.objects.get()
         except Crontab.DoesNotExist:
-            crontab = 'fuck'
+            crontab = None
 
         form = CrontabForm(instance=crontab)
         context = {'form': form, 'crontab': crontab}
