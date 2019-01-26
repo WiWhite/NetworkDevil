@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 
 from .forms import DevicesForm, CrontabForm
 from .models import Devices, Crontab
-from my_crontab import add_cron
+from my_crontab import add_cron, update_cron
 
 
 class DevicesView(View):
@@ -139,6 +139,8 @@ class UpdateCrontab(View):
 
         if form.is_valid():
             update_crontab = form.save()
+            update_cron(crontab.minute, crontab.hour, crontab.day)
+
             return HttpResponseRedirect(reverse('devices_list_url'))
         else:
             return render(request, 'editordb/update_crontab.html', {'form': form})
