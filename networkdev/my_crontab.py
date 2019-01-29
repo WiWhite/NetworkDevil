@@ -11,7 +11,7 @@ def add_cron(minute, hour, day):
 
     my_cron = CronTab(user=getuser())
 
-    job = my_cron.new(command='python3 backup_master.py; python3 limit_files.py ')
+    job = my_cron.new(command='python3 backup_master.py; python3 limit_files.py')
     job.minute.on(minute)
     job.hour.on(hour)
     job.dow.on(day)

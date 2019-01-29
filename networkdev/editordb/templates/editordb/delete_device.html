@@ -8,10 +8,10 @@
 
 {% block content %}
 
-<form method="POST" action="{% url "delete_device_url" id=device.id %}">
-    {% csrf_token %}
+<h2 style="margin-left:80px;margin-bottom:25px">Are you sure you want delete device with this ip address <b>{{device.ip_address}}</b>?</h2>
 
-    <h3>Are you sure you want delete device with this ip address <b>{{device.ip_address}}</b>?</h3>
+<form method="POST" action="{% url "delete_device_url" id=device.id %}" style="margin-left:1000px;">
+    {% csrf_token %}
 
     <input type="submit" value="Delete" class="btn btn-dark">
 </form>

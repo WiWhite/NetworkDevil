@@ -8,7 +8,9 @@
 
 {% block content %}
 
-  <form method="POST" action="{% url "add_crontab_url" %}">
+  <h2 style="margin-left:80px;margin-bottom:25px">Enter the required data:</h2>
+
+  <form method="POST" action="{% url "add_crontab_url" %}" style="margin-left:50px;">
       {% csrf_token %}
       {{form.as_p}}
       <input type="submit" value="Save" class="btn btn-dark">

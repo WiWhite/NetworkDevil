@@ -8,7 +8,9 @@
 
 {% block content %}
 
-<form method="POST" action="{% url "update_crontab_url" %}">
+<h2 style="margin-left:60px;margin-bottom:25px">Edit:</h2>
+
+<form method="POST" action="{% url "update_crontab_url" %}" style="margin-left:50px;">
     {% csrf_token %}
     {{form.as_p}}
     <input type="submit" value="Update" class="btn btn-dark">

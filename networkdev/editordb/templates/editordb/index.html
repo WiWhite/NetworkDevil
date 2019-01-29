@@ -8,25 +8,27 @@
 
 {% block content %}
 
-    <form action="{% url "add_device_url" %}">
-        <button type="submit" class=" btn btn-dark ">Add new device</button>
-    </form>
+    <div class="btn-group" role="group" aria-label="..." style="margin-left:50px;">
+      <form action="{% url "add_device_url" %}">
+          <button type="submit" class=" btn btn-dark ">Add new device</button>
+      </form>
 
 
-    <form action="{% url "add_crontab_url" %}">
-        <button type="submit" class=" btn btn-dark ">Add crontab</button>
-    </form>
+      <form action="{% url "add_crontab_url" %}">
+          <button type="submit" class=" btn btn-dark ">Add crontab</button>
+      </form>
 
 
-    <form action="{% url "update_crontab_url" %}">
-      <button type="submit" class=" btn btn-dark ">Update crontab</button>
-    </form>
+      <form action="{% url "update_crontab_url" %}">
+        <button type="submit" class=" btn btn-dark ">Update crontab</button>
+      </form>
+    </div>
 
 
     {% if devices.object_list.count > 0 %}
 
-        <h2>DEVICES LIST</h2>
-        <table class="table table-sm">
+        <h2 style="margin-left:600px;">DEVICES LIST</h2>
+        <table class="table table-sm" style="margin-left:50px;">
             <thead><th scope="col">IP address</th><th scope="col">Login</th><th scope="col">Password</th><th scope="col">Production</th><th scope="col">Connection type</th><th></th></thead>
 
         {% for device in devices.object_list %}

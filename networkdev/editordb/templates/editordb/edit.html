@@ -9,7 +9,7 @@
 
 
 {% block content %}
-<form method="POST" action="{% url 'devices_create_url' %}">
+<form method="POST" action="{% url 'devices_create_url' %}" style="margin-left:50px;">
     {% csrf_token %}
     {{form}}
     <input type="submit" value="Save">
