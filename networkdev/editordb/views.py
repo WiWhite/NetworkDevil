@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from .forms import DevicesForm, CrontabForm
 from .models import Devices, Crontab
 from my_crontab import add_cron
+from diff_backups import show_diff
 
 
 class DevicesView(View):
@@ -30,11 +31,17 @@ class DevicesView(View):
         else:
             next_url = ''
 
+        try:
+            crontab = Crontab.objects.get()
+        except Crontab.DoesNotExist:
+            crontab = None
+
         context = {
             'devices': page,
             'is_paginated': is_paginated,
             'prev_url': prev_url,
             'next_url': next_url,
+            'crontab': crontab,
         }
 
         return render(request, 'editordb/index.html', context=context)
@@ -77,12 +84,13 @@ class UpdateDevice(View):
     def post(self, request, id):
         device = Devices.objects.get(pk=id)
         form = DevicesForm(request.POST, instance=device)
+        templates = 'editordb/update_device.html'
 
         if form.is_valid():
             update_device = form.save()
             return HttpResponseRedirect(reverse('devices_list_url'))
         else:
-            return render(request, 'editordb/update_device.html', {'form': form})
+            return render(request, templates, {'form': form})
 
 
 class DeleteDevice(View):
@@ -90,12 +98,22 @@ class DeleteDevice(View):
     def get(self, request, id):
         device = Devices.objects.get(pk=id)
         form = DevicesForm(instance=device)
-        return render(request, 'editordb/delete_device.html', {'device': device})
+        templates = 'editordb/delete_device.html'
+        return render(request, templates, {'device': device})
 
     def post(self, request, id):
         device = Devices.objects.get(pk=id)
         device.delete()
         return HttpResponseRedirect(reverse('devices_list_url'))
+
+
+class DiffDevice(View):
+
+    def get(self, request, id):
+        device = Devices.objects.get(pk=id)
+        diff = show_diff(device.location_backups)
+        return render(request, 'editordb/diff_backups.html', {'diff': diff})
+
 
 class AddCrontab(View):
 
@@ -122,20 +140,18 @@ class AddCrontab(View):
 class UpdateCrontab(View):
 
     def get(self, request):
-        try:
-            crontab = Crontab.objects.get()
-        except Crontab.DoesNotExist:
-            crontab = None
 
+        crontab = Crontab.objects.get()
         form = CrontabForm(instance=crontab)
         context = {'form': form, 'crontab': crontab}
-        templates = ['editordb/update_crontab.html', 'editordb/index.html']
+        templates = ['editordb/update_crontab.html']
         return render(request, templates, context=context)
 
 
     def post(self, request):
         crontab = Crontab.objects.get()
         form = CrontabForm(request.POST, instance=crontab)
+        templates = 'editordb/update_crontab.html'
 
         if form.is_valid():
             update_crontab = form.save()
@@ -143,4 +159,4 @@ class UpdateCrontab(View):
 
             return HttpResponseRedirect(reverse('devices_list_url'))
         else:
-            return render(request, 'editordb/update_crontab.html', {'form': form})
+            return render(request, templates, {'form': form})

@@ -14,15 +14,6 @@
       </form>
 
 
-      <form action="{% url "add_crontab_url" %}">
-          <button type="submit" class=" btn btn-dark ">Add crontab</button>
-      </form>
-
-
-      <form action="{% url "update_crontab_url" %}">
-        <button type="submit" class=" btn btn-dark ">Update crontab</button>
-      </form>
-
       {% if crontab == None %}
           <form action="{% url "add_crontab_url" %}">
             <button type="submit" class=" btn btn-dark ">Settings</button>
@@ -49,7 +40,7 @@
                 <td scope="row">{{ device.password }}</td>
                 <td scope="row">{{ device.production }}</td>
                 <td scope="row">{{ device.connection_type }}</td>
-                <td><a href="{{device.id}}/update_device" class="btn btn-dark">Edit</a> | <a href="{{device.id}}/delete_device" class="btn btn-dark">Delete</a></td>
+                <td><a href="{{device.id}}/update_device" class="btn btn-dark">Edit</a> | <a href="{{device.id}}/delete_device" class="btn btn-dark">Delete</a> | <a href="{{device.id}}/diff_backups" class="btn btn-dark">Diff</a></td>
             </tr>
 
         {% endfor %}

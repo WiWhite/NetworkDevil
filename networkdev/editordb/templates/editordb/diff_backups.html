@@ -1,0 +1,19 @@
+{% extends 'editordb/base_editordb.html' %}
+
+{% block title %}
+
+    Differences configurations
+
+{% endblock %}
+
+{% block content %}
+
+<h2 style="margin-left:80px;margin-bottom:25px"> Differences configurations <b>{{device.ip_address}}</b>:</h2>
+
+{{ diff }}
+
+<form action="{% url "devices_list_url" %}">
+  <button type="submit" class=" btn btn-dark ">Back</button>
+</form>
+
+{% endblock %}

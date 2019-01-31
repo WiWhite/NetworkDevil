@@ -8,4 +8,5 @@ urlpatterns = [
     path('<int:id>/delete_device/', DeleteDevice.as_view(), name='delete_device_url'),
     path('add_crontab/', AddCrontab.as_view(), name='add_crontab_url'),
     path('update_crontab/', UpdateCrontab.as_view(), name='update_crontab_url'),
+    path('<int:id>/diff_backups', DiffDevice.as_view(), name='diff_backups_url'),
 ]
