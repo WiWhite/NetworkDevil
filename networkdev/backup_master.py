@@ -57,7 +57,7 @@ def backup_name(ip_address):
     return filename
 
 
-def save(ip_address, filename, output):
+def save(ip_address, location_backups, filename, output):
 
     basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     dir_with_backups = 'BACKUPS'
@@ -72,13 +72,17 @@ def save(ip_address, filename, output):
     with open('{}/{}'.format(devicedir, filename), 'wb') as f:
         f.write(output)
 
+    if location_backups == '':
+        location_backups = devicedir
+        location_backups.save()
+
 
 def main():
 
     for device in DEVICES:
         config = ssh_connection(device.ip_address, device.login, device.password)
         name = backup_name(device.ip_address)
-        save(device.ip_address, name, config)
+        save(device.ip_address, device.location_backups, name, config)
 
 
 if __name__ == '__main__':
