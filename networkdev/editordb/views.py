@@ -3,6 +3,9 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic.edit import FormView
+from django.contrib.auth import login
 
 from .forms import DevicesForm, CrontabForm
 from .models import Devices, Crontab
@@ -111,7 +114,10 @@ class DiffDevice(View):
 
     def get(self, request, id):
         device = Devices.objects.get(pk=id)
-        diff = show_diff(device.location_backups)
+        if device.location_backups == '':
+            diff = 'Diff for {} not available!'.format(device.ip_address)
+        else:
+            diff = show_diff(device.location_backups)
         return render(request, 'editordb/diff_backups.html', {'diff': diff})
 
 
@@ -160,3 +166,16 @@ class UpdateCrontab(View):
             return HttpResponseRedirect(reverse('devices_list_url'))
         else:
             return render(request, templates, {'form': form})
+
+
+class LoginFormView(FormView):
+
+    form_class = AuthenticationForm
+    template_name = 'editordb/autheditor.html'
+    success_url = 'devices_list/'
+
+    def form_valid(self, form):
+
+        self.user = form.get_user()
+        login(self.request, self.user)
+        return super(LoginFormView, self).form_valid(form)
