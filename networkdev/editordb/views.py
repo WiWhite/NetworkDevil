@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.urls import reverse
@@ -6,14 +7,18 @@ from django.core.paginator import Paginator
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic.edit import FormView
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import DevicesForm, CrontabForm
 from .models import Devices, Crontab
+
 from my_crontab import add_cron
 from diff_backups import show_diff
 
 
-class DevicesView(View):
+class DevicesView(LoginRequiredMixin, View):
+
+    raise_exception = True
 
     def get(self, request):
         devices = Devices.objects.all()
@@ -50,7 +55,9 @@ class DevicesView(View):
         return render(request, 'editordb/index.html', context=context)
 
 
-class AddDevice(View):
+class AddDevice(LoginRequiredMixin, View):
+
+    raise_exception = True
 
     def get(self, request):
         form = DevicesForm()
@@ -73,7 +80,9 @@ class AddDevice(View):
             return render(request, 'editordb/add_device.html', {'form': form})
 
 
-class UpdateDevice(View):
+class UpdateDevice(LoginRequiredMixin, View):
+
+    raise_exception = True
 
     def get(self, request, id):
         device = Devices.objects.get(pk=id)
@@ -96,7 +105,9 @@ class UpdateDevice(View):
             return render(request, templates, {'form': form})
 
 
-class DeleteDevice(View):
+class DeleteDevice(LoginRequiredMixin, View):
+
+    raise_exception = True
 
     def get(self, request, id):
         device = Devices.objects.get(pk=id)
@@ -110,7 +121,9 @@ class DeleteDevice(View):
         return HttpResponseRedirect(reverse('devices_list_url'))
 
 
-class DiffDevice(View):
+class DiffDevice(LoginRequiredMixin, View):
+
+    raise_exception = True
 
     def get(self, request, id):
         device = Devices.objects.get(pk=id)
@@ -121,7 +134,9 @@ class DiffDevice(View):
         return render(request, 'editordb/diff_backups.html', {'diff': diff})
 
 
-class AddCrontab(View):
+class AddCrontab(LoginRequiredMixin, View):
+
+    raise_exception = True
 
     def get(self, request):
         form = CrontabForm()
@@ -143,7 +158,9 @@ class AddCrontab(View):
             return render(request, 'editordb/add_crontab.html', {'form': form})
 
 
-class UpdateCrontab(View):
+class UpdateCrontab(LoginRequiredMixin, View):
+
+    raise_exception = True
 
     def get(self, request):
 
