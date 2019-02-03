@@ -21,7 +21,14 @@ class DevicesView(LoginRequiredMixin, View):
     raise_exception = True
 
     def get(self, request):
-        devices = Devices.objects.all()
+
+        search_device = request.GET.get('search', '')
+
+        if search_device:
+            devices = Devices.objects.filter(ip_address=search_device)
+        else:
+            devices = Devices.objects.all()
+
         paginator = Paginator(devices, 10)
 
         page_number = request.GET.get('page', 1)

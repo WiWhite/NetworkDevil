@@ -23,6 +23,13 @@
             <button type="submit" class=" btn btn-dark ">Settings</button>
           </form>
       {% endif %}
+
+      <form class="navbar-form navbar-left" role="search" action="{% url 'devices_list_url' %}"style="margin-left:1230px;">
+        <div class="btn-group">
+          <input type="text" class="form-control" placeholder="Search" name="search">
+          <button type="submit" style="margin-left: "class="btn btn-dark">Search</button>
+        </div>
+      </form>
     </div>
 
 
@@ -53,7 +60,7 @@
     <nav aria-label="...">
       <ul class="pagination justify-content-center">
         <li class="page-item {% if not prev_url %} disabled {% endif %}">
-          <a class="page-link" href="{{ prev_url }}" tabindex="-1" aria-disabled="true" class="btn-dark">Previous</a>
+          <a class="page-link"  href="{{ prev_url }}" tabindex="-1" aria-disabled="true" >Previous</a>
         </li>
 
 
@@ -61,8 +68,8 @@
 
             {% if devices.number == n %}
 
-                <li class="page-item active" aria-current="page">
-                  <a class="page-link" href="?page={{ n }}">{{ n }}<span class="sr-only">(current)</span></a>
+                <li aria-current="page">
+                  <a class="page-link" style="color: black;background-color: #D3D3D3" href="?page={{ n }}">{{ n }}<span class="sr-only" style="color: black;">(current)</span></a>
                 </li>
 
             {% elif n > devices.number|add:-3 and n < devices.number|add:3  %}
