@@ -1,4 +1,4 @@
-from paramiko import SSHClient, AutoAddPolicy
+import paramiko
 import os
 import django
 
@@ -10,13 +10,13 @@ from time import sleep
 import datetime
 
 
-
-
 DEVICES = Devices.objects.all()
 
+
 def ssh_connection(ip_address, login, password):
-    client = SSHClient()
-    client.set_missing_host_key_policy(AutoAddPolicy)
+
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
     client.connect(
         ip_address,
         username=login,
@@ -54,7 +54,7 @@ def backup_name(ip_address):
                                         now.day,
                                         now.month,
                                         now.year,
-                                        now.hour,
+                                        (now.hour + 2),
                                         now.minute,
                                         now.second, 'cfg')
     return filename
@@ -83,7 +83,13 @@ def save(device, filename, output):
 def main():
 
     for device in DEVICES:
-        config = ssh_connection(device.ip_address, device.login, device.password)
+
+        try:
+            config = ssh_connection(device.ip_address, device.login, device.password)
+            
+        except paramiko.ssh_exception.NoValidConnectionsError:
+            continue
+
         name = backup_name(device.ip_address)
         save(device, name, config)
 
