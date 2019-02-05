@@ -31,5 +31,3 @@ def show_diff(namedir):
         diff_list.append(line)
 
     return diff_list
-
-print(show_diff('/home/alex/DjangoProdjects/BACKUPS/10.16.86.40'))
