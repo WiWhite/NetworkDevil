@@ -1,11 +1,14 @@
+import os
 from getpass import getuser
 from crontab import CronTab
+
+basedir = os.path.dirname(os.path.abspath(__file__))
 
 
 def add_cron(minute, hour, day):
 
     my_cron = CronTab(user=getuser())
-    command = 'python3 backup_master.py; python3 limit_files.py'
+    command = 'python3 {0}/backup_master.py; python3 {0}/limit_files.py'.format(basedir)
 
     try:
 

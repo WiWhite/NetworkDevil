@@ -26,6 +26,9 @@ def ssh_connection(ip_address, login, password):
     terminal = client.invoke_shell()
     sleep(1)
 
+    terminal.send('term len 0\n')
+    sleep(1)
+
     terminal.send('terminal datadump\n')
     sleep(1)
 
@@ -57,11 +60,11 @@ def backup_name(ip_address):
     return filename
 
 
-def save(ip_address, location_backups, filename, output):
+def save(device, filename, output):
 
     basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     dir_with_backups = 'BACKUPS'
-    devicedir = os.path.join(basedir, dir_with_backups, ip_address)
+    devicedir = os.path.join(basedir, dir_with_backups, device.ip_address)
 
     if not os.path.exists(os.path.join(basedir, dir_with_backups)):
         os.makedirs(os.path.join(basedir, dir_with_backups))
@@ -69,12 +72,12 @@ def save(ip_address, location_backups, filename, output):
     if not os.path.exists(devicedir):
         os.makedirs(devicedir)
 
+    if device.location_backups == '':
+        device.location_backups = devicedir
+        device.save()
+
     with open('{}/{}'.format(devicedir, filename), 'wb') as f:
         f.write(output)
-
-    if location_backups == '':
-        location_backups = devicedir
-        location_backups.save()
 
 
 def main():
@@ -82,7 +85,7 @@ def main():
     for device in DEVICES:
         config = ssh_connection(device.ip_address, device.login, device.password)
         name = backup_name(device.ip_address)
-        save(device.ip_address, device.location_backups, name, config)
+        save(device, name, config)
 
 
 if __name__ == '__main__':

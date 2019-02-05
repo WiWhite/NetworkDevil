@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64bed4b9-862c-4eed-95c6-b069a7b25317" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/editordb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/editordb/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backup_master.py" beforeDir="false" afterPath="$PROJECT_DIR$/backup_master.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/editordb/templates/editordb/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/editordb/templates/editordb/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_crontab.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_crontab.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/editordb/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="406">
-              <caret line="177" selection-start-line="177" selection-end-line="177" />
+              <caret line="200" selection-start-line="200" selection-end-line="200" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -92,7 +94,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,6 +110,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -178,16 +180,18 @@
       <workItem from="1548863536060" duration="1038000" />
       <workItem from="1548938111004" duration="160000" />
       <workItem from="1549027499707" duration="342000" />
+      <workItem from="1549293437822" duration="481000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14570000" />
+    <option name="totallyTimeSpent" value="15051000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24143426" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24541833" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -222,7 +226,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/editordb/views.py</url>
-          <line>177</line>
+          <line>200</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -309,15 +313,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/networkdev/diff_backups.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/networkdev/diff_backups.py" />
     <entry file="file://$USER_HOME$/.local/lib/python3.6/site-packages/django/views/generic/edit.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
@@ -335,7 +331,7 @@
     <entry file="file://$PROJECT_DIR$/editordb/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="406">
-          <caret line="177" selection-start-line="177" selection-end-line="177" />
+          <caret line="200" selection-start-line="200" selection-end-line="200" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>

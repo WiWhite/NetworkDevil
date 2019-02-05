@@ -8,9 +8,12 @@
 
 {% block content %}
 
-<h2 style="margin-left:80px;margin-bottom:25px"> Differences configurations <b>{{device.ip_address}}</b>:</h2>
+<h2 style="margin-left:80px;margin-bottom:25px"> Differences configurations:</h2>
 
-{{ diff }}
+    {% for el in diff %}
+        {{el|linebreaks}}
+    {% endfor %}
+
 
 <form action="{% url "devices_list_url" %}">
   <button type="submit" class=" btn btn-dark ">Back</button>
