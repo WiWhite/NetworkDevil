@@ -11,26 +11,13 @@
 <h2 style="margin-left:80px;margin-bottom:25px"> Differences configurations:</h2>
 
 
-  <h3 style="font-size: 15px; margin-left: 30px">
-    {% if device.location_backups == '' %}
-
-          {{diff}}
-
-      {% else %}
-
-        {% for el in diff %}
-
-              {{el|linebreaks}}
-
-        {% endfor %}
-
-      {% endif %}
-  </h3>
+{% autoescape off %}
+    {{ diff }}
+{% endautoescape %}
 
 
-
-<form action="{% url "devices_list_url" %}" style="margin-left: 500px">
-  <button type="submit" class=" btn btn-dark ">Back</button>
+<form action="{% url "devices_list_url" %}" style="margin-left: 1800px">
+  <button type="submit" class=" btn btn-dark btn-lg ">Back</button>
 </form>
 
 {% endblock %}
