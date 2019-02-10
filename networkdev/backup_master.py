@@ -13,7 +13,7 @@ import datetime
 DEVICES = Devices.objects.all()
 
 
-def ssh_connection(ip_address, login, password):
+def ssh_connection(ip_address, login, password, production):
 
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
@@ -22,18 +22,27 @@ def ssh_connection(ip_address, login, password):
         username=login,
         password=password
         )
+    if production == 'cisco':
 
-    terminal = client.invoke_shell()
-    sleep(1)
+        terminal = client.invoke_shell()
+        sleep(1)
 
-    terminal.send('term len 0\n')
-    sleep(1)
+        terminal.send('term len 0\n')
+        sleep(1)
 
-    terminal.send('terminal datadump\n')
-    sleep(1)
+        terminal.send('terminal datadump\n')
+        sleep(1)
 
-    terminal.send('sh run\n')
-    sleep(10)
+        terminal.send('sh run\n')
+        sleep(10)
+
+    elif production == 'HP':
+
+        terminal.send('screen-length disable\n')
+        sleep(1)
+
+        terminal.send('display current-configuration\n')
+        sleep(10)
 
     output = terminal.recv(99999)
 
@@ -85,8 +94,8 @@ def main():
     for device in DEVICES:
 
         try:
-            config = ssh_connection(device.ip_address, device.login, device.password)
-            
+            config = ssh_connection(device.ip_address, device.login, device.password, device.production)
+
         except paramiko.ssh_exception.NoValidConnectionsError:
             continue
 
