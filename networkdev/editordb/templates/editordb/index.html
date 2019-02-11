@@ -33,27 +33,27 @@
     </div>
 
 
-    {% if devices.object_list.count > 0 %}
 
-        <h2 style="margin-left:600px;">DEVICES LIST</h2>
-        <table class="table table-sm" style="margin-left:50px;">
-            <thead><th scope="col">IP address</th><th scope="col">Login</th><th scope="col">Password</th><th scope="col">Production</th><th scope="col">Connection type</th><th></th></thead>
 
-        {% for device in devices.object_list %}
+    <h2 style="margin-left:600px;">DEVICES LIST</h2>
+    <table class="table table-sm" style="margin-left:50px;">
+        <thead><th scope="col">IP address</th><th scope="col">Login</th><th scope="col">Password</th><th scope="col">Production</th><th scope="col">Connection type</th><th></th></thead>
 
-            <tr>
-                <td scope="row">{{ device.ip_address }}</td>
-                <td scope="row">{{ device.login }}</td>
-                <td scope="row">{{ device.password }}</td>
-                <td scope="row">{{ device.production }}</td>
-                <td scope="row">{{ device.connection_type }}</td>
-                <td><a href="{{device.id}}/update_device" class="btn btn-dark">Edit</a> | <a href="{{device.id}}/delete_device" class="btn btn-dark">Delete</a> | <a href="{{device.id}}/diff_backups" class="btn btn-dark">Diff</a></td>
-            </tr>
+    {% for device in devices.object_list %}
 
-        {% endfor %}
-        </table>
+        <tr>
+            <td scope="row">{{ device.ip_address }}</td>
+            <td scope="row">{{ device.login }}</td>
+            <td scope="row">{{ device.password }}</td>
+            <td scope="row">{{ device.production }}</td>
+            <td scope="row">{{ device.connection_type }}</td>
+            <td><a href="{{device.id}}/update_device" class="btn btn-dark">Edit</a> | <a href="{{device.id}}/delete_device" class="btn btn-dark">Delete</a> | <a href="{{device.id}}/diff_backups" class="btn btn-dark">Diff</a></td>
+        </tr>
 
-    {% endif %}
+    {% endfor %}
+    </table>
+
+
 
     {% if is_paginated%}
 
