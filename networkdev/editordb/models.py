@@ -1,5 +1,8 @@
 from django.db import models
 from django.core.validators import validate_ipv4_address
+from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 
 class ID_production(models.Model):
@@ -38,32 +41,26 @@ class Devices(models.Model):
     class Meta:
         ordering = ['id']
 
-class Minutes(models.Model):
-    minutes = models.IntegerField()
+def validate_day(value):
+    days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN', 'ED']
+    if value not in days:
+        raise ValidationError('{} is not in {}'.format(value, days))
 
-    def __str__(self):
-        return str(self.minutes)
-
-
-class Hours(models.Model):
-    hours = models.IntegerField()
-
-    def __str__(self):
-        return str(self.hours)
-
-class Days(models.Model):
-    days = models.CharField(max_length=9)
-
-    def __str__(self):
-        return self.days
-
-    class Meta:
-        ordering = ['id']
 
 class Crontab(models.Model):
-    minute = models.ForeignKey(Minutes, on_delete=models.CASCADE)
-    hour = models.ForeignKey(Hours, on_delete=models.CASCADE)
-    day = models.ForeignKey(Days, on_delete=models.CASCADE)
+    minute = models.IntegerField(
+                      validators=[MinValueValidator(0), MaxValueValidator(59)]
+                      )
+    hour = models.IntegerField(
+                      validators=[MinValueValidator(0), MaxValueValidator(23)]
+                      )
+    day = models.CharField(
+                      max_length=3, unique=True, validators=[validate_day]
+                      )
 
     def __str__(self):
         return str(self.day)
+
+
+    class Meta:
+        ordering = ['id']
