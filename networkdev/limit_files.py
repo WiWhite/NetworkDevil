@@ -1,6 +1,11 @@
 import os
-import datetime
+import django
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'networkdev.settings')
+django.setup()
+
+import datetime
+from editordb.models import Crontab
 
 
 backupsdir = os.path.join(os.path.dirname(
@@ -8,12 +13,14 @@ backupsdir = os.path.join(os.path.dirname(
 
 def scandel(scandir):
 
+    crontab = Crontab.objects.all()
+
     for dirpath, dirnames, filenames in os.walk(scandir):
        for file in filenames:
           curpath = os.path.join(dirpath, file)
           file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(curpath))
           diff_age = datetime.datetime.now() - file_modified
-          max_age = datetime.timedelta(days=6)
+          max_age = datetime.timedelta(days=crontab.ttl_backups)
 
           if diff_age > max_age:
               os.remove(curpath)

@@ -57,6 +57,9 @@ class Crontab(models.Model):
     day = models.CharField(
                       max_length=3, unique=True, validators=[validate_day]
                       )
+    ttl_backups = models.IntegerField(default=6,
+                      validators=[MinValueValidator(1), MaxValueValidator(365)]
+                      )
 
     def __str__(self):
         return str(self.day)

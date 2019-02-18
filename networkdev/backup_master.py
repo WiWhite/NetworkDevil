@@ -94,7 +94,12 @@ def main():
     for device in DEVICES:
 
         try:
-            config = ssh_connection(device.ip_address, device.login, device.password, device.production)
+            config = ssh_connection(
+                               device.ip_address,
+                               device.login,
+                               device.password,
+                               device.production
+                               )
 
         except paramiko.ssh_exception.NoValidConnectionsError:
             continue

@@ -16,4 +16,4 @@ class DevicesForm(forms.ModelForm):
 class CrontabForm(forms.ModelForm):
     class Meta:
         model = Crontab
-        fields = ('minute', 'hour', 'day')
+        fields = ('minute', 'hour', 'day', 'ttl_backups')
