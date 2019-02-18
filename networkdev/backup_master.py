@@ -7,6 +7,7 @@ django.setup()
 
 from editordb.models import Devices
 from time import sleep
+import threading
 import datetime
 
 
@@ -22,29 +23,38 @@ def ssh_connection(ip_address, login, password, production):
         username=login,
         password=password
         )
-    if production == 'cisco':
+
+    output = None
+    timesleep = threading.Event()
+
+    if production.production == 'cisco':
 
         terminal = client.invoke_shell()
-        sleep(1)
+        timesleep.wait(timeout=1)
 
         terminal.send('term len 0\n')
-        sleep(1)
+        timesleep.wait(timeout=1)
 
         terminal.send('terminal datadump\n')
-        sleep(1)
+        timesleep.wait(timeout=1)
 
         terminal.send('sh run\n')
-        sleep(10)
+        timesleep.wait(timeout=10)
 
-    elif production == 'HP':
+        output = terminal.recv(99999)
+
+    elif production.production == 'HP':
+
+        terminal = client.invoke_shell()
+        timesleep.wait(timeout=1)
 
         terminal.send('screen-length disable\n')
-        sleep(1)
+        timesleep.wait(timeout=1)
 
         terminal.send('display current-configuration\n')
-        sleep(10)
+        timesleep.wait(timeout=10)
 
-    output = terminal.recv(99999)
+        output = terminal.recv(99999)
 
     client.close()
 
