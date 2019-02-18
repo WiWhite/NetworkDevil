@@ -6,7 +6,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'networkdev.settings')
 django.setup()
 
 from editordb.models import Devices
-from time import sleep
 import threading
 import datetime
 
