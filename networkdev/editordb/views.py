@@ -137,7 +137,10 @@ class DiffDevice(LoginRequiredMixin, View):
             diff = 'Diff for {} not available!'.format(device.ip_address)
         else:
             diff = show_diff(device.location_backups)
-        return render(request, 'editordb/diff_backups.html', {'diff': diff, 'device': device})
+        return render(request, 'editordb/diff_backups.html', {
+                                                              'diff': diff,
+                                                              'device': device
+                                                              })
 
 
 class AddCrontab(LoginRequiredMixin, View):

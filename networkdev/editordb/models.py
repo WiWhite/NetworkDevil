@@ -49,16 +49,21 @@ def validate_day(value):
 
 class Crontab(models.Model):
     minute = models.IntegerField(
-                      validators=[MinValueValidator(0), MaxValueValidator(59)]
+                      validators=[MinValueValidator(0), MaxValueValidator(59)],
+                      help_text='1-59'
                       )
     hour = models.IntegerField(
-                      validators=[MinValueValidator(0), MaxValueValidator(23)]
+                      validators=[MinValueValidator(0), MaxValueValidator(23)],
+                      help_text='1-23'
                       )
     day = models.CharField(
-                      max_length=3, unique=True, validators=[validate_day]
+                      max_length=3, unique=True, validators=[validate_day],
+                      help_text='MON, TUE, WED, THU, FRI, SAT, SUN or ED'
                       )
     ttl_backups = models.IntegerField(default=6,
-                      validators=[MinValueValidator(1), MaxValueValidator(365)]
+                      validators=[MinValueValidator(1), MaxValueValidator(365)],
+                      help_text='1-365', 
+                      verbose_name='TTL Backups'
                       )
 
     def __str__(self):

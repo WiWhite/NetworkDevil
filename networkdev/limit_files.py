@@ -13,7 +13,7 @@ backupsdir = os.path.join(os.path.dirname(
 
 def scandel(scandir):
 
-    crontab = Crontab.objects.all()
+    crontab = Crontab.objects.get()
 
     for dirpath, dirnames, filenames in os.walk(scandir):
        for file in filenames:
