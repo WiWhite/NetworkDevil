@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="{% static 'networkdev/main.css' %}">
+
+    <title>
+      {% block title %}
+          All Devices
+      {% endblock %}
+    </title>
+  </head>
+  <body>
+
+    {% block content %}
+        There is no any content for you.
+    {% endblock %}
+
+  </body>
+</html>
