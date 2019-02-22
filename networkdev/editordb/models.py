@@ -24,7 +24,8 @@ class Devices(models.Model):
                             max_length=15,
                             db_index=True,
                             unique=True,
-                            validators=[validate_ipv4_address]
+                            validators=[validate_ipv4_address],
+                            verbose_name='IP address'
                             )
     login = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
@@ -62,8 +63,8 @@ class Crontab(models.Model):
                       )
     ttl_backups = models.IntegerField(default=6,
                       validators=[MinValueValidator(1), MaxValueValidator(365)],
-                      help_text='1-365', 
-                      verbose_name='TTL Backups'
+                      help_text='1-365',
+                      verbose_name='TTL Backups',
                       )
 
     def __str__(self):

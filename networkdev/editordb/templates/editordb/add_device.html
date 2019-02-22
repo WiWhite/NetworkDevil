@@ -8,12 +8,14 @@
 
 {% block content %}
 
-<h2 style="margin-left:80px;margin-bottom:25px">Enter the required data:</h2>
+  <h2 style="margin: 0;position: absolute;top: 25%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">Enter the required data:</h2>
 
-<form method="POST" action="{% url "add_device_url" %}" style="margin-left:50px;">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Save" class="btn btn-dark">
-</form>
+  <form method="POST" action="{% url 'add_device_url' %}" style="margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+      {% csrf_token %}
+      <table>
+        {{form.as_table}}
+      </table>
+      <input type="submit" value="Save" class="btn btn-dark" style="margin-left:300px;">
+  </form>
 
 {% endblock %}

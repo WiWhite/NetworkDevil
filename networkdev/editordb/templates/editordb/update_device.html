@@ -8,11 +8,13 @@
 
 {% block content %}
 
-<h2 style="margin-left:60px;margin-bottom:25px">Edit:</h2>
+<h2 style="margin: 0;position: absolute;top: 25%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">Edit:</h2>
 
-<form method="POST" action="{% url "update_device_url" id=device.id %}" style="margin-left:50px;">
+<form method="POST" action="{% url 'update_device_url' id=device.id %}" style="margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
     {% csrf_token %}
-    {{form.as_p}}
+    <table>
+      {{form.as_table}}
+    </table>
     <input type="submit" value="Update" class="btn btn-dark">
 </form>
 
