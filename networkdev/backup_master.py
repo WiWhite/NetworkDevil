@@ -100,7 +100,21 @@ def save(device, filename, output):
 
 def main():
 
+    basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    logfile = 'networkdev.log'
+    pathlog = os.path.join(basedir, logfile)
+
     for device in DEVICES:
+
+        now = datetime.datetime.now()
+        time = '{}-{}-{}_{}-{}-{}'.format(
+                                          now.day,
+                                          now.month,
+                                          now.year,
+                                          (now.hour + 2),
+                                          now.minute,
+                                          now.second
+                                          )
 
         try:
             config = ssh_connection(
@@ -110,7 +124,26 @@ def main():
                                device.production
                                )
 
-        except paramiko.ssh_exception.NoValidConnectionsError:
+            with open(pathlog, 'a') as f:
+                done = '\n{}{}{}{}{}'.format(
+                                    time,
+                                    '---',
+                                    device.ip_address,
+                                    '---',
+                                    'DONE'
+                                    )
+                f.write(done)
+
+        except (paramiko.ssh_exception.NoValidConnectionsError, TimeoutError):
+            with open(pathlog, 'a') as f:
+                error = '\n{}{}{}{}{}'.format(
+                                     time,
+                                     '---',
+                                     device.ip_address,
+                                     '---',
+                                     'ERROR'
+                                     )
+                f.write(error)
             continue
 
         name = backup_name(device.ip_address)
